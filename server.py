@@ -19,14 +19,14 @@ videoSW = 0
 #Main
 while True:
 	conn, addr = s.accept()
-	print 'Connection address:', addr
+	print '[SERVER] Connection address:', addr
 	while True:
 		data = conn.recv(BUFFER_SIZE)
 		if not data: break
-		print "Server received data:", data
+		print "[SERVER] Server received data:", data
 		conn.send(data)  # echo
-		if (videoSW == 0 and (data != "9" or data != "10")):
-			print "Now playing video " +data
+		if (videoSW == 0 and data != "9" and data != "10"):
+			print "[SERVER] Now playing video " +data
 			vidpath = "/home/pi/Downloads/"+str(data)+".mp4"
 			process = subprocess.Popen(['omxplayer', '-b', vidpath], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
 			videoSW = 1
@@ -34,14 +34,14 @@ while True:
 			#print stdout
 	
 		elif (data == "9" and videoSW == 1):
-			print "Pause/Play video"
+			print "[SERVER] Pause/Play video"
 			process.stdin.write('p')
 		elif (data == "10" and videoSW == 1):
-			print "Stop playing video"
+			print "[SERVER] Stop playing video"
 			process.stdin.write('q')
 			videoSW = 0
 		else:
-			print "Sorry, invalid input"
+			print "[SERVER] Sorry, invalid input"
 
 	
 conn.close()

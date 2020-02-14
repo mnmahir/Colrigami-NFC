@@ -10,22 +10,22 @@ p = pexpect.spawn('/home/pi/linux_libnfc-nci/nfcDemoApp poll', timeout=None)
 
 for line in p:
 	if "Text :" in line:
-		print "Scan success"
-		print "Connecting to TCP server"
+		print "[NFC] Scan success"
+		print "[NFC] Connecting to TCP server"
 		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		s.connect((TCP_IP, TCP_PORT))
-		print "Connected to server"
+		print "[NFC] Connected to server"
 		NfcContent = line.strip()
 		NfcContent = NfcContent.replace('Text :','')
 		NfcContent = NfcContent.replace('	','')
 		NfcContent = NfcContent.replace(' ','')
 		NfcContent = NfcContent.replace("'",'')
-		print "Sending \"" + NfcContent + "\" to server"
+		print "[NFC] Sending \"" + NfcContent + "\" to server"
 		s.send(NfcContent)
 		serverData = s.recv(BUFFER_SIZE)
-		print "Server echo:", serverData
+		print "[NFC] Server echo:", serverData
 		s.close()
-		print "Connection to server closed"
+		print "[NFC] Connection to server closed"
 	#if  "Lost" in line:
 		#print "lost"
 		#s.send("lost")
