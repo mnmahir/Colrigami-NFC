@@ -4,11 +4,11 @@ const Net = require('net');
 
 const port = 5010;
 const host = '127.0.0.1';
-const client = new Net.Socket();
+//const client = new Net.Socket();
 
-client.connect({port: port, host: host}), function(){
-console.log('TCP connection established with the server.');
-};
+//client.connect({port: port, host: host}), function(){
+//	console.log('TCP connection established with the server.');
+//};
 
 // the value that can be read and written from Android
 var value = 1;
@@ -29,9 +29,10 @@ var capstoneCharacteristic = new CapstoneCharacteristic({
   		if (offset) {
     			callback(this.RESULT_ATTR_NOT_LONG, null);
   		} else {
+			console.log('Sending data to phone');
     			var data = new Buffer(1);
     			data.writeUInt8(value, 0);
-			console.log('Data read: ' + value);
+			console.log('Data sent: ' + value);
     			callback(this.RESULT_SUCCESS, data);
   		}
 	},
@@ -41,9 +42,17 @@ var capstoneCharacteristic = new CapstoneCharacteristic({
   		} else if (data.length !== 1) {
     			callback(this.RESULT_INVALID_ATTRIBUTE_LENGTH);
   		} else {
+			console.log('Receiving data from phone');
     			value = data.readUInt8(0);
-			console.log('Data written: ' + value);
+			console.log('Data received: ' + value);
+			const client = new Net.Socket();
+			console.log('Connecting to server');
+			client.connect({port: port, host: host});
+			console.log('Sending data to server');
 			client.write(String(value));
+			console.log('Data sent: ' + value);
+			client.end();
+			console.log('Disconnected from server');
 			callback(this.RESULT_SUCCESS);
 		}
   	}
