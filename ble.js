@@ -29,10 +29,9 @@ var capstoneCharacteristic = new CapstoneCharacteristic({
   		if (offset) {
     			callback(this.RESULT_ATTR_NOT_LONG, null);
   		} else {
-			console.log('Sending data to phone');
     			var data = new Buffer(1);
     			data.writeUInt8(value, 0);
-			console.log('Data sent: ' + value);
+			console.log('[BLE] Data sent to mobile device: ' + value);
     			callback(this.RESULT_SUCCESS, data);
   		}
 	},
@@ -42,18 +41,17 @@ var capstoneCharacteristic = new CapstoneCharacteristic({
   		} else if (data.length !== 1) {
     			callback(this.RESULT_INVALID_ATTRIBUTE_LENGTH);
   		} else {
-			console.log('Receiving data from phone');
     			value = data.readUInt8(0);
-			console.log('Data received: ' + value);
+			console.log('[BLE] Data received from mobile device: ' + value);
 			const client = new Net.Socket();
-			console.log('Connecting to server');
+			console.log('[BLE] Connecting to server');
 			client.connect({port: port, host: host});
-			console.log('Sending data to server');
 			client.write(String(value));
-			console.log('Data sent: ' + value);
+			console.log('[BLE] Data sent to server: ' + value);
 			client.end();
 			console.log('Disconnected from server');
 			callback(this.RESULT_SUCCESS);
+			delete client;
 		}
   	}
 });
