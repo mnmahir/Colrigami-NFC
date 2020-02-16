@@ -69,7 +69,7 @@ var capstoneService = new CapstoneService({
 // start BLE advertising if USB BLE is on
 bleno.on('stateChange', function(state) {
   if (state === 'poweredOn') {
-    bleno.startAdvertising('Capstone Project G10', ['13333333333333333333333333333337'], function(err) {
+    bleno.startAdvertising('Capstone G10 Colrigami', ['13333333333333333333333333333337'], function(err) {
       if (err) {
         console.log(err);
       }
