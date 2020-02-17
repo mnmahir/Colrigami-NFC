@@ -25,7 +25,7 @@ while True:
 		if not data: break
 		print "[SERVER] Server received data:", data
 		conn.send(data)  # echo
-		if (videoSW == 0 and data != "9" and data != "10"):
+		if (videoSW == 0 and int(data) >=0 and int(data) <=2):
 			print "[SERVER] Now playing video " +data
 			vidpath = "/home/pi/Downloads/"+str(data)+".mp4"
 			process = subprocess.Popen(['omxplayer', '-b', vidpath], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
@@ -33,10 +33,22 @@ while True:
 			#stdout, stderr = process.communicate()
 			#print stdout
 	
-		elif (data == "9" and videoSW == 1):
+		elif (data == "10" and videoSW == 1):
 			print "[SERVER] Pause/Play video"
 			process.stdin.write('p')
-		elif (data == "10" and videoSW == 1):
+		elif (data == "11" and videoSW == 1):
+			print "[SERVER] Decrease speed video"
+			process.stdin.write('1')
+		elif (data == "12" and videoSW == 1):
+			print "[SERVER] Increase speed video"
+			process.stdin.write('>')
+		elif (data == "13" and videoSW == 1):
+			print "[SERVER] Rewind video"
+			process.stdin.write('\033[D')
+		elif (data == "14" and videoSW == 1):
+			print "[SERVER] Fast forward video"
+			process.stdin.write('\033[C')
+		elif (data == "15" and videoSW == 1):
 			print "[SERVER] Stop playing video"
 			process.stdin.write('q')
 			videoSW = 0
