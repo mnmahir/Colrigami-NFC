@@ -15,8 +15,16 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
+            android:layout_height="500dp"
             app:srcCompat="@drawable/logobg" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Scan an Origami NFC to start learning!"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_gravity="center"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:padding="8dp">
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -101,7 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:padding="8dp">
 
 
             <Button
